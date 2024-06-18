@@ -12,7 +12,7 @@ public class Triangle : Figure
     }
 
     public double GetSemiPerimetr() => Perimetr / 2;
-    private string Rectangular()
+    public string Rectangular()
     {
         var side = Sides[0];
         double[] sidesWithoutLongestSide = new double[Sides.Length - 1];

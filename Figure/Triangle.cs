@@ -44,8 +44,8 @@ public class Triangle : Figure
 
         for (var i = 0; i < Sides.Length; i++)
             result *= semiPerimetr - Sides[i];
-            
-        return Math.Round(Math.Sqrt(semiPerimetr * result), 2);
+
+        return Math.Sqrt(semiPerimetr * result);
     }
     public override string GetSquareAsString()
     {

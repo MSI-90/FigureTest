@@ -17,14 +17,17 @@ public class TriangleCheckerTests
     }
 
     [Fact]
-    public void Square_7_24_25()
+    public void Square_RandomSides()
     {
-        double oneSide = 7, twoSide = 24, thirtSide = 25;
+        Random rand = new Random();
+        double oneSide = rand.NextDouble() * 10, twoSide = rand.NextDouble() * 10, thirtSide = rand.NextDouble() * 10;
         Triangle triangle = new Triangle(oneSide, twoSide, thirtSide);
-        
+        var semiPerimetr = triangle.GetSemiPerimetr();
+
         double actual = triangle.Square();
 
-        double result = 84;
+
+        double result = Math.Sqrt(semiPerimetr * (semiPerimetr - oneSide) * (semiPerimetr - twoSide) * (semiPerimetr - thirtSide));
 
         Assert.Equal(result, actual);
     }

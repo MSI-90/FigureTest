@@ -7,12 +7,11 @@ public class Triangle : Figure
     public Triangle(double firstSide, double secondtSide, double thirdtSide)
     {
         Sides = [ firstSide, secondtSide, thirdtSide ];
-        Perimetr = 0;
         foreach (var side in Sides)
             Perimetr += side;
     }
 
-    private double GetSemiPerimetr() => Perimetr / 2;
+    public double GetSemiPerimetr() => Perimetr / 2;
     private string Rectangular()
     {
         var side = Sides[0];
@@ -46,7 +45,7 @@ public class Triangle : Figure
         for (var i = 0; i < Sides.Length; i++)
             result *= semiPerimetr - Sides[i];
             
-        return Math.Sqrt(semiPerimetr * result);
+        return Math.Round(Math.Sqrt(semiPerimetr * result), 2);
     }
     public override string GetSquareAsString()
     {

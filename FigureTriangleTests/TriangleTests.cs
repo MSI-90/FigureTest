@@ -1,6 +1,7 @@
-﻿using Figure.FigureExceptions;
+﻿using Figure;
+using Figure.FigureExceptions;
 
-namespace Figure.Tests;
+namespace FigureTriangleTests;
 
 [TestClass()]
 public class TriangleTests

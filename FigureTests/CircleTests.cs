@@ -1,6 +1,7 @@
-﻿using Figure.FigureExceptions;
+﻿using Figure;
+using Figure.FigureExceptions;
 
-namespace Figure.Tests;
+namespace FigureCircleTests;
 
 [TestClass()]
 public class CircleTests

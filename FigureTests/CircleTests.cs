@@ -1,5 +1,4 @@
 ﻿using Figure.FigureExceptions;
-using System.Diagnostics;
 
 namespace Figure.Tests;
 
@@ -8,21 +7,19 @@ public class CircleTests
 {
     private Circle circle;
 
-    public void Circle_Create(double radius)
+    public void Circle_CreateTest(double radius)
     {
         circle = new Circle(radius);
-        if (circle is not null)
-            Console.WriteLine("The circle object has been created");
-        else 
-            Console.WriteLine("The circle object don't created");
+        Console.WriteLine("The circle object has been created");
     }
 
     [ExpectedException(typeof(BadValueRadiusException), "Exception was not throw")]
-    [TestMethod()]
-    public void Circle_BadValueRadius()
+    [DataTestMethod]
+    [DataRow(-5)]
+    [DataRow(0)]
+    public void Circle_BadValueRadiusTest(double testRadius)
     {
-        double radius = 0;
-        Circle_Create(radius);
+        Circle_CreateTest(testRadius);
     }
 
     [DataTestMethod]
@@ -31,8 +28,7 @@ public class CircleTests
     [DataRow(11.11, 387.77)]
     public void Square_ValidTest(double testData, double expectedResult)
     {
-        Circle_Create(testData);
-
+        Circle_CreateTest(testData);
         double actual = circle.Square();
 
         Assert.AreEqual(expectedResult, actual, $"The square of circle with radius - {testData} must be eaual {expectedResult}");
@@ -45,8 +41,7 @@ public class CircleTests
     [DataRow(11.11, 387.76)]
     public void Square_InValidTest(double testData, double expectedResult)
     {
-        Circle_Create(testData);
-
+        Circle_CreateTest(testData);
         double actual = circle.Square();
 
         Assert.AreNotEqual(expectedResult, actual, $"The square of circle with radius - {testData} must be eaual {expectedResult}");
@@ -59,13 +54,12 @@ public class CircleTests
     [DataRow(11.11, 387.77)]
     public void GetSquareAsString_ValidTest(double testData, double expectedResult)
     {
-        Circle_Create(testData);
+        Circle_CreateTest(testData);
 
         string validText = $"Площадь окружности равна: {expectedResult}";
-
         string actual = circle.GetSquareAsString();
 
-        Assert.AreEqual(validText, actual, $"The GetSquareAsString method should return \"{validText}\", but it returned \"{actual}\"");
+        Assert.AreEqual(validText, actual, $"The GetSquareAsString method should return {validText}, but it returned {actual}");
     }
 
     [DataTestMethod]
@@ -74,12 +68,11 @@ public class CircleTests
     [DataRow(11.11, 387.76)]
     public void GetSquareAsString_InValidTest(double testData, double expectedResult)
     {
-        Circle_Create(testData);
+        Circle_CreateTest(testData);
 
         string validText = $"Площадь окружности равна: {expectedResult}";
-
         string actual = circle.GetSquareAsString();
 
-        Assert.AreNotEqual(validText, actual, $"The GetSquareAsString method should return \"{validText}\", but it returned \"{actual}\"");
+        Assert.AreNotEqual(validText, actual, $"The GetSquareAsString method should return {validText}, but it returned {actual}");
     }
 }

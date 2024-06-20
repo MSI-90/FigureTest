@@ -1,4 +1,7 @@
-﻿namespace Figure;
+﻿using Figure.FigureExceptions;
+using System.Drawing;
+
+namespace Figure;
 
 public class Triangle : Figure
 {
@@ -7,8 +10,49 @@ public class Triangle : Figure
     public Triangle(double firstSide, double secondtSide, double thirdtSide)
     {
         Sides = [ firstSide, secondtSide, thirdtSide ];
-        foreach (var side in Sides)
-            Perimetr += side;
+        if (IsValidSides(Sides))
+            foreach (var side in Sides)
+                Perimetr += side;
+    }
+
+    public bool IsValidSides(double[] values)
+    {
+        foreach (var side in values)
+        {
+            if (side <= 0)
+                throw new BadValuesTriangleException("Invalid value of one or more sides for triangle");
+        }
+
+        var maxValueSide = values.Max();
+        int countOfMaxValue = values.Count(v => v.Equals(maxValueSide));
+        double[] tempArray;
+        if (countOfMaxValue == values.Length)
+        {
+            tempArray = [ values[0], values[1] ];
+        }
+        else
+        {
+            tempArray = new double[values.Length - 1];
+            int tempArrayIndex = 0;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] != maxValueSide)
+                {
+                    tempArray[tempArrayIndex] = values[i];
+                    tempArrayIndex++;
+                }
+            }
+        }
+
+        double summ = 0d;
+        foreach(var item in tempArray)
+            summ += item;         
+
+        return maxValueSide >= summ 
+            ? throw new GreaterOrSameValuesTriangleException("One of the sides of a triangle is greater than the sum of the other two sides. " +
+                "It is also possible that two or more sides are equal ")
+            : true;
     }
 
     public double GetSemiPerimetr() => Perimetr / 2;
@@ -45,7 +89,7 @@ public class Triangle : Figure
         for (var i = 0; i < Sides.Length; i++)
             result *= semiPerimetr - Sides[i];
 
-        return Math.Sqrt(semiPerimetr * result);
+        return Math.Round(Math.Sqrt(semiPerimetr * result), 2);
     }
     public override string GetSquareAsString()
     {
@@ -53,6 +97,6 @@ public class Triangle : Figure
         if (double.IsNaN(result))
             return "ошибка данных";
 
-        return $"Площадь треугольника равна: {Square()}, {Rectangular()}";
+        return $"Площадь треугольника равна: {Square()}";
     } 
 }
